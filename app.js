@@ -11,13 +11,11 @@ app.use(bodyParser.urlencoded({
     extended : true
 }))
 
-
-
 //mongoose configuration
 mongoose.Promise = global.Promise;
 // mongoose.connect("mongodb://localhost:27017/node-demo")
 
-
+//Setting a connection to mongo database
 mongoose.connect('mongodb://localhost:27017/node-demo', { useUnifiedTopology: true }  ,(err) => {
     if(!err){
         console.log('MONGO DB succesfully connected')
@@ -26,18 +24,20 @@ mongoose.connect('mongodb://localhost:27017/node-demo', { useUnifiedTopology: tr
     }
 });
 
-
+//Creating a listening port to be 5000
 app.listen(5000, () => {
     console.log(`App listening on port ${port}!`)
 });
 
+//Route to dispaly the name input form
 app.get("/",(req,res) =>{
     res.sendFile(__dirname + "/index.html")
 });
 
+//Saving to the data base
 app.post("/addname", (req, res) => {
     
-    //create a new instance of the model
+//create a new instance of the model
 var myData = new User(req.body);
 myData.save()
 .then(item => {
